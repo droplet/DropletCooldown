@@ -1,0 +1,9 @@
+name: ${project.name}
+version: ${project.version}-${buildNumber}
+description: ${project.description}
+website: ${project.url}
+author: ${project.organization.name}
+
+main: ${project.groupId}.${project.artifactId}.${project.name}
+platform: ${platform}
+reload: ${reload}
