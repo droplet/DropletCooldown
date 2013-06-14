@@ -28,41 +28,33 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import org.spout.api.Server;
-import org.spout.api.UnsafeMethod;
-import org.spout.api.command.CommandRegistrationsFactory;
-import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
-import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
-import org.spout.api.command.annotated.SimpleInjector;
+import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.plugin.Plugin;
 
 import org.spout.droplet.cooldown.command.DropletCommand;
 import org.spout.droplet.cooldown.configuration.DropletConfig;
 
-public class DropletCooldown extends CommonPlugin {
+public class DropletCooldown extends Plugin {
 	private DropletConfig config;
 	private Server server;
 
 	private HashSet<UUID> Players = new HashSet<UUID>();
 
 	@Override
-	@UnsafeMethod
 	public void onDisable() {
 		server.getScheduler().cancelTasks(this);
 	}
 
 	@Override
-	@UnsafeMethod
 	public void onEnable() {
 		try {
 			config.load();
 		} catch (ConfigurationException e) {
 			getLogger().log(Level.WARNING, "Error loading DropletCooldown configuration: ", e);
 		}
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		getEngine().getRootCommand().addSubCommands(this, DropletCommand.class, commandRegFactory);
-
+		AnnotatedCommandExecutorFactory.create(new DropletCommand(this));
 	}
 
 	@Override

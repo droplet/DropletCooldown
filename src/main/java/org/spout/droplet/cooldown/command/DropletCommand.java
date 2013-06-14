@@ -23,10 +23,10 @@
  */
 package org.spout.droplet.cooldown.command;
 
-import org.spout.api.command.CommandContext;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
-import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.command.annotated.Permissible;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.inventory.ItemStack;
@@ -47,8 +47,8 @@ public class DropletCommand {
 	// Aliases are like nicknames for commands. You can use them to make the command shorter.
 	@SuppressWarnings("static-access")
 	@Command(aliases = {"stone", "s"}, usage = "/stone", desc = ".", min = 0, max = 0)
-	@CommandPermissions("dc.commands.stone")
-	public void stone(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("dc.commands.stone")
+	public void stone(CommandSource source, CommandArguments args) throws CommandException {
 		if (source instanceof Player) {
 			// We are now going to cast the source as a player object since we confirmed that the source is the player.
 			final Player ply = (Player) source;
@@ -70,7 +70,6 @@ public class DropletCommand {
 						plugin.removePlayer(ply);
 						ply.sendMessage("You can now use the command 'stone' again!");
 					}
-
 				}, plugin.getConfig().COMMANDDELAY.getLong() * 20, TaskPriority.LOW);
 			}
 			source.sendMessage("Sorry, this command can only be used by a player.");
