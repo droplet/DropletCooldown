@@ -30,9 +30,8 @@ import java.util.logging.Level;
 import org.spout.api.Server;
 import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
 import org.spout.api.entity.Player;
-import org.spout.api.exception.ConfigurationException;
 import org.spout.api.plugin.Plugin;
-
+import org.spout.cereal.config.ConfigurationException;
 import org.spout.droplet.cooldown.command.DropletCommand;
 import org.spout.droplet.cooldown.configuration.DropletConfig;
 
